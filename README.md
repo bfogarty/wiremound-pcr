@@ -1,4 +1,4 @@
-Arduino-PCR-LEDs
+Arduino PCR (with LEDs)
 ================
 
-Modification of an Arduino program for PCR that includes LED indicators.
+Modification of code by Stacey Kuznetsov and Matt Mancuso that performs PCR using an Arduino. This version includes a few extra lines that enable LED indicators.
