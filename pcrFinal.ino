@@ -235,7 +235,7 @@ void runPCR() {
    
     time = millis();
     Serial.println("DENATURATION");
-	digitalWrite(denaturePin, HIGH); // turn denature LED on
+	  digitalWrite(denaturePin, HIGH); // turn denature LED on
     CURRENT_PHASE='D';
     if(cycles > 0) {
       holdConstantTemp(DENATURE_TIME, DENATURE_TEMP);
@@ -244,7 +244,7 @@ void runPCR() {
       holdConstantTemp(INITIAL_DENATURE_TIME, DENATURE_TEMP);
     }
     Serial.println();
-	digitalWrite(denaturePin, LOW); // turn denature LED off
+	  digitalWrite(denaturePin, LOW); // turn denature LED off
   
     Serial.println("COOLING");
     time = millis();
@@ -256,7 +256,7 @@ void runPCR() {
     Serial.println();
      
     Serial.println("ANNEALING");
-	digitalWrite(annealingPin, HIGH); // turn denature LED on
+	  digitalWrite(annealingPin, HIGH); // turn denature LED on
     time = millis();
     CURRENT_PHASE='A';
     holdConstantTemp(ANNEALING_TIME, ANNEALING_TEMP);
@@ -264,7 +264,7 @@ void runPCR() {
     Serial.print("***TOTAL ANNEALING TIME ");
     Serial.println(dif);
     Serial.println();
-	digitalWrite(annealingPin, LOW); // turn denature LED off
+	  digitalWrite(annealingPin, LOW); // turn denature LED off
     
     
     Serial.println("HEATING UP");
@@ -278,7 +278,7 @@ void runPCR() {
   
      
     Serial.println("EXTENSION");
-	digitalWrite(extensionPin, HIGH); // turn denature LED on
+	  digitalWrite(extensionPin, HIGH); // turn denature LED on
     time = millis();
     CURRENT_PHASE='E';
     if (cycles<(NUM_CYCLES-1)) {
@@ -292,7 +292,7 @@ void runPCR() {
     Serial.println(dif);
     Serial.println();
     Serial.println();
-	digitalWrite(extensionPin, LOW); // turn denature LED off
+	  digitalWrite(extensionPin, LOW); // turn denature LED off
     
     Serial.print("///TOTAL CYCLE TIME: ");
     Serial.println(millis()-cycleStartTime);
