@@ -40,8 +40,13 @@ MAX6675 thermocouple(thermoCLK, thermoCS, thermoDO);
 
 
 int fanPin = 9; // pin for controling the fan
- 
 
+/* LED Pins */
+int denaturePin = 10;
+int annealingPin = 11;
+int extensionPin = 12;
+int statusPin = 13;
+ 
 //safety vars
 short ROOM_TEMP = 18; // if initial temp is below this, we assume thermocouple is diconnected or not working
 short MAX_ALLOWED_TEMP = 100; // we never go above 100C
@@ -230,6 +235,7 @@ void runPCR() {
    
     time = millis();
     Serial.println("DENATURATION");
+	digitalWrite(denaturePin, HIGH); // turn denature LED on
     CURRENT_PHASE='D';
     if(cycles > 0) {
       holdConstantTemp(DENATURE_TIME, DENATURE_TEMP);
@@ -238,6 +244,7 @@ void runPCR() {
       holdConstantTemp(INITIAL_DENATURE_TIME, DENATURE_TEMP);
     }
     Serial.println();
+	digitalWrite(denaturePin, LOW); // turn denature LED off
   
     Serial.println("COOLING");
     time = millis();
@@ -249,6 +256,7 @@ void runPCR() {
     Serial.println();
      
     Serial.println("ANNEALING");
+	digitalWrite(annealingPin, HIGH); // turn denature LED on
     time = millis();
     CURRENT_PHASE='A';
     holdConstantTemp(ANNEALING_TIME, ANNEALING_TEMP);
@@ -256,6 +264,7 @@ void runPCR() {
     Serial.print("***TOTAL ANNEALING TIME ");
     Serial.println(dif);
     Serial.println();
+	digitalWrite(annealingPin, LOW); // turn denature LED off
     
     
     Serial.println("HEATING UP");
@@ -269,6 +278,7 @@ void runPCR() {
   
      
     Serial.println("EXTENSION");
+	digitalWrite(extensionPin, HIGH); // turn denature LED on
     time = millis();
     CURRENT_PHASE='E';
     if (cycles<(NUM_CYCLES-1)) {
@@ -282,13 +292,15 @@ void runPCR() {
     Serial.println(dif);
     Serial.println();
     Serial.println();
+	digitalWrite(extensionPin, LOW); // turn denature LED off
     
     Serial.print("///TOTAL CYCLE TIME: ");
     Serial.println(millis()-cycleStartTime);
     Serial.println();
-} 
+  } 
     
   Serial.println("DONE");
+  digitalWrite(statusPin, LOW); // turn status LED off
 }
 
 
@@ -301,6 +313,17 @@ void setup() {
  digitalWrite(heatPin, LOW);  
  pinMode(fanPin, OUTPUT);
  digitalWrite(fanPin, LOW);
+ 
+  // Initialize LEDs 
+ pinMode(denaturePin, OUTPUT);
+ digitalWrite(denaturePin, LOW);
+ pinMode(annealingPin, OUTPUT);
+ digitalWrite(annealingPin, LOW);
+ pinMode(extensionPin, OUTPUT);
+ digitalWrite(extensionPin, LOW);
+ 
+ pinMode(statusPin, OUTPUT);
+ digitalWrite(statusPin, HIGH);
  
  // time out for 5 seconds.
  Serial.println("Starting in");
